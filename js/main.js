@@ -1,6 +1,12 @@
 function sketch(p){
     const container = document.querySelector('.container'); 
     const radios = document.querySelectorAll('.radio');
+    const range = document.querySelector('.range'); 
+    range.addEventListener('input',()=>{
+        console.log(range.value*2);
+        size = range.value*2; 
+    })
+    let size = (range.value*2); 
     let current;  
     let img; 
     let img2; 
@@ -35,11 +41,21 @@ function sketch(p){
     }
    
     let c1 = p.color('#3F5EFB'); 
-    let colors = [p.color('#302b63'),p.color('#00b09b'),p.color('#96c93d'),p.color('#F3F9A7'),p.color('#ffc0cb'),p.color('#00F260'),p.color('#f7b733'), p.color('#FF0080'),p.color('#FFD200')]; 
+    let colors = [
+        p.color('#302b63'),
+        p.color('#00b09b'),
+        p.color('#96c93d'),
+        p.color('#F3F9A7'),
+        p.color('#ffc0cb'),
+        p.color('#00F260'),
+        p.color('#f7b733'),
+        p.color('#FF0080'),
+        p.color('#FFD200')
+    ]; 
  
     let buble =()=>{
         return (posx,posy)=>{
-            let size = 120; 
+           
             let color=Math.floor(p.random(0,colors.length)); 
             let dir =[1,1]; 
             return{
@@ -47,18 +63,35 @@ function sketch(p){
                     //
                     p.tint(colors[color]); 
                     p.image(current,posx,posy,size,size);
-                    let xStep = Math.floor(p.random(-1,1));
-                    let yStep = Math.floor(p.random(-1,1));
-                    posx += xStep*dir[0];
-                    posy += yStep*dir[1];
+
+                    const r = p.floor(p.random(4));
+                    switch (r) {
+                      case 0:
+                        posx = posx*dir[0] + 1;
+                        break;
+                      case 1:
+                        posx = posx*dir[0] - 1;
+                        break;
+                      case 2:
+                        posy = posy*dir[1] + 1;
+                        break;
+                      case 3:
+                        posy = posy*dir[1] - 1;
+                        break;
+                    }
+
+                    // let xStep = Math.floor(p.random(-1,1));
+                    // let yStep = Math.floor(p.random(-1,1));
+                    // posx += xStep*dir[0];
+                    // posy += yStep*dir[1];
 
 
-                    if(posx<=0 || posx+size>=container.clientWidth){
-                        dir[0]*=-1; 
-                    }
-                    if(posy<=0 || posy+size>=container.clientHeight){
-                        dir[1]*=-1; 
-                    }
+                    // if(posx<=0 || posx+size>=container.clientWidth){
+                    //     dir[0]*=-1; 
+                    // }
+                    // if(posy<=0 || posy+size>=container.clientHeight){
+                    //     dir[1]*=-1; 
+                    // }
                 },
                 colision: ()=>{
                     color = Math.floor(p.random(0,colors.length)); 
@@ -82,12 +115,9 @@ function sketch(p){
         
         //define
         bubles=[
-            test(300,100),
-            test(200,200),
-            test(250,350),
-            // test(350,220),
-            // test(50,150),
-            // test(450,420)   
+            test(p.random(100,300),p.random(50,200)),
+            test(p.random(200,400),p.random(300,350)),
+            test(p.random(100,200),p.random(200,350)), 
         ];
     }
     p.windowResized =()=>{

@@ -22,6 +22,7 @@ font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 
 }
 h2, h4{
+  padding-left: 0.2em;
   margin-bottom: 1em;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
